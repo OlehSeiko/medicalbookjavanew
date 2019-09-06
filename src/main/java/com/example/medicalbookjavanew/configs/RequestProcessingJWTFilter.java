@@ -24,7 +24,7 @@ public class RequestProcessingJWTFilter extends GenericFilterBean {
 
         HttpServletRequest httpServletRequest = (HttpServletRequest) servletRequest;
 
-        String token = httpServletRequest.getHeader("Autorization");
+        String token = httpServletRequest.getHeader("Authorization");
 
         if(token != null) {
             String user = Jwts.parser()

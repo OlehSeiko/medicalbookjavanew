@@ -20,27 +20,34 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.Collections;
 
 public class LoginFilter extends AbstractAuthenticationProcessingFilter {
-    private UserService userDetailsService;
 
-    public LoginFilter(String url, AuthenticationManager authManager, UserService userDetailsService) {
+    private AuthenticationManager authenticationManager;
+
+    public LoginFilter(String url, AuthenticationManager authManager) {
         super(new AntPathRequestMatcher(url));
-        setAuthenticationManager(authManager);
-        this.userDetailsService = userDetailsService;
+        this.authenticationManager = authManager;
     }
 
 
-//Метод який логінить
+    //Метод який логінить
     @Override
     public Authentication attemptAuthentication(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse) throws AuthenticationException, IOException, ServletException {
         User user = new ObjectMapper()
                 .readValue(httpServletRequest.getInputStream(), User.class);
-        return getAuthenticationManager()
+        System.out.println(user);
+
+        Authentication authenticate = this.authenticationManager
                 .authenticate(new UsernamePasswordAuthenticationToken(
                         user.getUsername(),
-                        user.getPassword()
+                        user.getPassword(),
+                        Collections.emptyList()
                 ));
+        System.out.println("isauth:");
+        System.out.println(authenticate.isAuthenticated());
+        return authenticate;
     }
 
     @Override

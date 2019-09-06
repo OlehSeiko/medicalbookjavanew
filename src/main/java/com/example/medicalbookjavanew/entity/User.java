@@ -21,6 +21,7 @@ public class User implements UserDetails {
     private String surname;
     @Column(unique = true)
     private String username;
+    private String password;
     private String phone;
     private int data;
     private String month;
@@ -33,15 +34,6 @@ public class User implements UserDetails {
         return null;
     }
 
-    @Override
-    public String getPassword() {
-        return null;
-    }
-
-    @Override
-    public String getUsername() {
-        return null;
-    }
 
     @Override
     public boolean isAccountNonExpired() {

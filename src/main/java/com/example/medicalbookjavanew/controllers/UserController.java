@@ -26,7 +26,7 @@ public class UserController {
     @PostMapping("/save")
     public void save(@RequestBody User user) {
         System.out.println(user);
-        user.setMonth(passwordEncoder.encode(user.getMonth()));
+       user.setPassword(passwordEncoder.encode(user.getPassword()));
         userService.save(user);
     }
 }
